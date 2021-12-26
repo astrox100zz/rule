@@ -77,6 +77,8 @@ public final class RuleContext<Model> {
                 valueHolder.setValue(value);
                 if (valueHolder.isComplete()) {
                     return valueHolder;
+                } else {
+                    continue;
                 }
             }
             boolean success = true;
@@ -129,6 +131,35 @@ public final class RuleContext<Model> {
         this.valueMap = new InfoCache.ValueMap(modelInst.size() * 2);
     }
 
+    private <T> T getOrNull(Method method) {
+        final String name = method.getName();
+        if (name.startsWith("set")) {
+            throw new UnsupportedOperationException();
+        }
+        String fieldName = getFieldName(name);
+        if (fieldName == null) {
+            log.warn("{} fieldName not found!", method.toGenericString());
+            return null;
+        }
+        return getOrNull(fieldName);
+    }
+
+    private String getFieldName(String methodName) {
+        String fieldName = METHOD_NAME_2_FIELD_NAME_CACHE.get(methodName);
+        if (fieldName != null) {
+            return fieldName;
+        }
+        if (methodName.startsWith("get")) {
+            fieldName = Introspector.decapitalize(methodName.substring(3));
+        } else if (methodName.startsWith("is")) {
+            fieldName = Introspector.decapitalize(methodName.substring(3));
+        } else {
+            return null;
+        }
+        METHOD_NAME_2_FIELD_NAME_CACHE.put(methodName, fieldName);
+        return fieldName;
+    }
+
     /**
      * 懒加载指定对象
      *
@@ -166,33 +197,4 @@ public final class RuleContext<Model> {
     }
 
     private static final Map<String, String> METHOD_NAME_2_FIELD_NAME_CACHE = new ConcurrentHashMap<>(8192);
-
-    private <T> T getOrNull(Method method) {
-        final String name = method.getName();
-        if (name.startsWith("set")) {
-            throw new UnsupportedOperationException();
-        }
-        String fieldName = getFieldName(name);
-        if (fieldName == null) {
-            log.warn("{} fieldName not found!", method.toGenericString());
-            return null;
-        }
-        return getOrNull(fieldName);
-    }
-
-    private String getFieldName(String methodName) {
-        String fieldName = METHOD_NAME_2_FIELD_NAME_CACHE.get(methodName);
-        if (fieldName != null) {
-            return fieldName;
-        }
-        if (methodName.startsWith("get")) {
-            fieldName = Introspector.decapitalize(methodName.substring(3));
-        } else if (methodName.startsWith("is")) {
-            fieldName = Introspector.decapitalize(methodName.substring(3));
-        } else {
-            return null;
-        }
-        METHOD_NAME_2_FIELD_NAME_CACHE.put(methodName, fieldName);
-        return fieldName;
-    }
 }

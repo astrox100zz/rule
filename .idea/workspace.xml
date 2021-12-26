@@ -23,31 +23,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5e3b760-af3e-477a-a74a-58433deec493" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/RuleContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nmj/rule/annotations/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/annotations/Rule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nmj/rule/core/InfoCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/InfoCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nmj/rule/core/RuleContext.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/Suit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/Suit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/core/InfoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/InfoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/InfoCache$Argument.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/InfoCache$Model.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/InfoCache$Rule.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/InfoCache.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/RuleContext$DefaultCons.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/RuleContext$Lazy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/RuleContext$RuleCallback.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/RuleContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleClassTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleClassTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleClassTest2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleClassTest2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/Suit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/nmj/rule/Suit.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/core/InfoTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nmj/rule/InfoCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/InfoCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nmj/rule/RuleContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/RuleContext.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +117,7 @@
       <recent name="nmj.rule" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.InfoTest.test3">
+  <component name="RunManager" selected="JUnit.RuleTest.test (1)">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -242,8 +221,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.InfoTest.test3" />
         <item itemvalue="JUnit.RuleTest.test (1)" />
+        <item itemvalue="JUnit.InfoTest.test3" />
         <item itemvalue="JUnit.RuleTest.tes3t" />
         <item itemvalue="JUnit.InfoTest.test" />
         <item itemvalue="JUnit.RuleTest.test" />
@@ -293,38 +272,42 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="548" height="466" key="DebuggerActiveHint/0.0.1920.1080@0.0.1920.1080" timestamp="1640521802853" />
-    <state width="1899" height="375" key="GridCell.Tab.0.bottom" timestamp="1640524527183">
+    <state width="1899" height="375" key="GridCell.Tab.0.bottom" timestamp="1640525324245">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1899" height="375" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527183" />
-    <state width="1899" height="375" key="GridCell.Tab.0.center" timestamp="1640524527179">
+    <state width="1899" height="375" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1640525324245" />
+    <state width="1899" height="375" key="GridCell.Tab.0.center" timestamp="1640525324243">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1899" height="375" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527179" />
-    <state width="1899" height="375" key="GridCell.Tab.0.left" timestamp="1640524527177">
+    <state width="1899" height="375" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1640525324243" />
+    <state width="1899" height="375" key="GridCell.Tab.0.left" timestamp="1640525324241">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1899" height="375" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527177" />
-    <state width="1899" height="375" key="GridCell.Tab.0.right" timestamp="1640524527181">
+    <state width="1899" height="375" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1640525324241" />
+    <state width="1899" height="375" key="GridCell.Tab.0.right" timestamp="1640525324244">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1899" height="375" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527181" />
-    <state width="1899" height="375" key="GridCell.Tab.1.bottom" timestamp="1640524527048">
+    <state width="1899" height="375" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1640525324244" />
+    <state width="1899" height="375" key="GridCell.Tab.1.bottom" timestamp="1640525324248">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1899" height="375" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527048" />
-    <state width="1899" height="375" key="GridCell.Tab.1.center" timestamp="1640524527046">
+    <state width="1899" height="375" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1640525324248" />
+    <state width="1899" height="375" key="GridCell.Tab.1.center" timestamp="1640525324247">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1899" height="375" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527046" />
-    <state width="1899" height="375" key="GridCell.Tab.1.left" timestamp="1640524527045">
+    <state width="1899" height="375" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1640525324247" />
+    <state width="1899" height="375" key="GridCell.Tab.1.left" timestamp="1640525324246">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1899" height="375" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527045" />
-    <state width="1899" height="375" key="GridCell.Tab.1.right" timestamp="1640524527047">
+    <state width="1899" height="375" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1640525324246" />
+    <state width="1899" height="375" key="GridCell.Tab.1.right" timestamp="1640525324248">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1899" height="375" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527047" />
+    <state width="1899" height="375" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1640525324248" />
+    <state x="515" y="276" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1640524947153">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="515" y="276" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1080@0.0.1920.1080" timestamp="1640524947153" />
     <state x="657" y="323" key="refactoring.ChangeSignatureDialog" timestamp="1640519436245">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -333,21 +316,5 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1640521759578" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest2.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest2.java</url>
-          <line>10</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
