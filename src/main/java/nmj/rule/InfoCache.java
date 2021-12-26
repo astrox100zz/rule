@@ -89,7 +89,7 @@ final class InfoCache {
                 continue;
             }
             String name = annotation.name();
-            if (name == null || name.isEmpty()) {
+            if (name.isEmpty()) {
                 throw new IllegalArgumentException();
             }
             models.add(new InfoCache.Model(name, field));
@@ -107,7 +107,7 @@ final class InfoCache {
                 continue;
             }
             String name = ruleAnnotation.value();
-            if (name == null || name.isEmpty()) {
+            if (name.isEmpty()) {
                 throw new IllegalArgumentException();
             }
             nmj.rule.annotations.RuleOrder orderAnnotation = method.getAnnotation(nmj.rule.annotations.RuleOrder.class);
@@ -150,6 +150,9 @@ final class InfoCache {
                     throw new IllegalArgumentException();
                 }
                 RuleInst ruleInst = new RuleInst(rule, modelInst);
+                if (!Objects.equals(ruleInst.getReturnType(), inst.getType())) {
+                    throw new IllegalArgumentException();
+                }
                 inst.addRule(ruleInst);
             }
         }
@@ -190,6 +193,9 @@ final class InfoCache {
         private final List<Argument> args;
 
         public Rule(String name, long order, Method method, ParameterNameDiscoverer pnd) {
+            if (!Modifier.isPrivate(method.getModifiers())) {
+                throw new IllegalStateException();
+            }
             method.setAccessible(true);
             this.name = name;
             this.method = method;
@@ -289,8 +295,20 @@ final class InfoCache {
             this.args = initArgs(rule, modelInst);
         }
 
+        public Class<?> getReturnType() {
+            return rule.getReturnType();
+        }
+
         public List<ModelInst> getArgs() {
             return args;
+        }
+
+        public <Model> Object getValue(Rules<Model> rules) {
+            return rule.getValue(rules);
+        }
+
+        public <Model> Object getValue(Rules<Model> rules, Object[] arguments) {
+            return rule.getValue(rules, arguments);
         }
 
         private List<ModelInst> initArgs(Rule rule, Map<String, ModelInst> modelInst) {
@@ -310,14 +328,6 @@ final class InfoCache {
                 args.add(inst);
             }
             return args;
-        }
-
-        public <Model> Object getValue(Rules<Model> rules) {
-            return rule.getValue(rules);
-        }
-
-        public <Model> Object getValue(Rules<Model> rules, Object[] arguments) {
-            return rule.getValue(rules, arguments);
         }
     }
 

@@ -14,9 +14,8 @@ public class RuleTest {
         });
         final String brand1 = suitRuleContext.getOrNull("brand");
         System.out.println(brand1);
-        Suit modelProxy = suitRuleContext.getProxy();
-        String brand = modelProxy.getBrand();
-        System.out.println(brand);
+        final Suit proxy = suitRuleContext.getProxy();
+        System.out.println(proxy.getBrand1());
     }
 
     @Test

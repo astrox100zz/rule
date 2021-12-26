@@ -7,8 +7,8 @@ public class RuleClassTest implements Rules<Suit> {
 
     @RuleOrder(-1)
     @Rule("brand")
-    private String brand(String brand) {
-        return "wasup";
+    private String brand(String brand2) {
+        return brand2.toLowerCase();
     }
 
     @RuleOrder(0)
