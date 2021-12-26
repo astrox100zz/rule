@@ -1,6 +1,5 @@
-package nmj.rule.core;
+package nmj.rule;
 
-import nmj.rule.Rules;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
 
@@ -67,11 +66,15 @@ final class InfoCache {
     }
 
     private static <Model> DefaultCons<Model> getConstructorInternal(Class<Model> targetRuleClass) {
-        for (Type genericInterface : targetRuleClass.getGenericInterfaces()) {
-            String typeName = genericInterface.getTypeName();
-            if (typeName.contains(Rules.class.getName())) {
-                Class<Model> modelClass = (Class<Model>) ((ParameterizedType) genericInterface).getActualTypeArguments()[0];
-                return new DefaultCons<>(modelClass);
+        for (Class<?> current = targetRuleClass;
+             !Objects.equals(current, Object.class);
+             current = current.getSuperclass()) {
+            for (Type genericInterface : current.getGenericInterfaces()) {
+                String typeName = genericInterface.getTypeName();
+                if (typeName.contains(Rules.class.getName())) {
+                    Class<Model> modelClass = (Class<Model>) ((ParameterizedType) genericInterface).getActualTypeArguments()[0];
+                    return new DefaultCons<>(modelClass);
+                }
             }
         }
         throw new IllegalArgumentException();
@@ -223,6 +226,22 @@ final class InfoCache {
             }
             return args;
         }
+
+        public <Model> Object getValue(Rules<Model> rules, Object[] arguments) {
+            try {
+                return method.invoke(rules, arguments);
+            } catch (Throwable e) {
+                throw new IllegalStateException(e);
+            }
+        }
+
+        public <Model> Object getValue(Rules<Model> rules) {
+            try {
+                return method.invoke(rules);
+            } catch (Throwable e) {
+                throw new IllegalStateException(e);
+            }
+        }
     }
 
     /**
@@ -244,6 +263,18 @@ final class InfoCache {
         public Class<?> getType() {
             return model.getType();
         }
+
+        public List<RuleInst> getRules() {
+            return rules;
+        }
+
+        public String getName() {
+            return model.getName();
+        }
+
+        public Object get(Object md) {
+            return model.get(md);
+        }
     }
 
     /**
@@ -256,6 +287,10 @@ final class InfoCache {
         public RuleInst(Rule rule, Map<String, ModelInst> modelInst) {
             this.rule = rule;
             this.args = initArgs(rule, modelInst);
+        }
+
+        public List<ModelInst> getArgs() {
+            return args;
         }
 
         private List<ModelInst> initArgs(Rule rule, Map<String, ModelInst> modelInst) {
@@ -275,6 +310,14 @@ final class InfoCache {
                 args.add(inst);
             }
             return args;
+        }
+
+        public <Model> Object getValue(Rules<Model> rules) {
+            return rule.getValue(rules);
+        }
+
+        public <Model> Object getValue(Rules<Model> rules, Object[] arguments) {
+            return rule.getValue(rules, arguments);
         }
     }
 
@@ -322,6 +365,63 @@ final class InfoCache {
 
         public Class<Model> getDeclaringClass() {
             return constructor.getDeclaringClass();
+        }
+    }
+
+    static final class ValueHolder {
+        private Object value;
+        private boolean unreachable;
+
+        public ValueHolder(Object value) {
+            setValue(value);
+        }
+
+        public ValueHolder() {
+            setValue(null);
+        }
+
+        public void setValue(Object value) {
+            if (isComplete()) {
+                throw new IllegalStateException();
+            }
+            this.value = value;
+            this.unreachable = false;
+        }
+
+        public <T> T getValue() {
+            if (isComplete()) {
+                return (T) value;
+            }
+            throw new IllegalStateException();
+        }
+
+        public void markAsUnreachable() {
+            this.unreachable = true;
+        }
+
+        public boolean isComplete() {
+            return value != null;
+        }
+
+        public boolean isUnreachable() {
+            return unreachable;
+        }
+    }
+
+    static final class ValueMap {
+        private final Map<String, ValueHolder> valueMap;
+
+        public ValueMap(int size) {
+            this.valueMap = new HashMap<>(size);
+        }
+
+        public ValueHolder get(String name, Object model, ModelInst modelInst) {
+            ValueHolder valueHolder = valueMap.get(name);
+            if (valueHolder == null) {
+                valueHolder = new ValueHolder(modelInst.get(model));
+                valueMap.put(name, valueHolder);
+            }
+            return valueHolder;
         }
     }
 }

@@ -33,7 +33,7 @@ public class Suit {
     private String brand13;
     @Model(name = "brand14", comment = "品牌")
     private String brand14;
-    @Model(name = "brand", comment = "品牌")
+    @Model(name = "brand51", comment = "品牌")
     private String brand15;
     @Model(name = "brand15", comment = "品牌")
     private String brand16;

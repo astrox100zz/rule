@@ -1,6 +1,5 @@
 package nmj.rule;
 
-import nmj.rule.core.RuleContext;
 import org.junit.Test;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,10 +8,12 @@ public class RuleTest {
 
     @Test
     public void test() throws Exception {
-        RuleClassTest ruleClassTest = new RuleClassTest();
+        RuleClassTest ruleClassTest = new RuleClassTest2();
         RuleContext<Suit> suitRuleContext = RuleContext.create(ruleClassTest, (m) -> {
-            m.setBrand("ngoarmy");
+            m.setBrand2("er");
         });
+        final String brand1 = suitRuleContext.getOrNull("brand");
+        System.out.println(brand1);
         Suit modelProxy = suitRuleContext.getProxy();
         String brand = modelProxy.getBrand();
         System.out.println(brand);

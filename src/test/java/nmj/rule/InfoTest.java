@@ -1,6 +1,5 @@
-package nmj.rule.core;
+package nmj.rule;
 
-import nmj.rule.Suit;
 import nmj.rule.annotations.Model;
 import org.junit.Test;
 
@@ -12,12 +11,16 @@ public class InfoTest {
 
     @Test
     public void test3() throws Exception {
+        long t0 = System.currentTimeMillis();
+        InfoCache.getRules(Suit.class);
         long t = System.currentTimeMillis();
         InfoCache.getRules(Suit.class);
         long t1 = System.currentTimeMillis();
         InfoCache.getModels(Suit.class);
         long t2 = System.currentTimeMillis();
         InfoCache.getModels(Suit.class);
+        // 第一次访问10ms左右
+        System.out.println((t - t0));
         // 第一次访问10ms左右
         System.out.println((t1 - t));
         long t3 = System.currentTimeMillis();

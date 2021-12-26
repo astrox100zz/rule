@@ -3,19 +3,51 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b5e3b760-af3e-477a-a74a-58433deec493" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/Rules.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/annotations/Model.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/annotations/Rule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/annotations/RuleOrder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/core/InfoCache.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/core/RuleContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/Suit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/core/InfoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/RuleContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nmj/rule/annotations/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/annotations/Rule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nmj/rule/core/InfoCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nmj/rule/InfoCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nmj/rule/core/RuleContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/RuleTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/Suit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/Suit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/nmj/rule/core/InfoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nmj/rule/InfoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/InfoCache$Argument.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/InfoCache$Model.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/InfoCache$Rule.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/InfoCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/RuleContext$DefaultCons.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/RuleContext$Lazy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/RuleContext$RuleCallback.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/nmj/rule/core/RuleContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleClassTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleClassTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleClassTest2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleClassTest2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/nmj/rule/RuleTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/Suit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/nmj/rule/Suit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/nmj/rule/core/InfoTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +62,8 @@
       <list>
         <option value="AnnotationType" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit4 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -57,12 +89,15 @@
       <projects_view />
     </option>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/src.zip!/java/lang/Class.java" root0="SKIP_INSPECTION" />
-    <setting file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/src.zip!/java/lang/reflect/Constructor.java" root0="SKIP_INSPECTION" />
-  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="8qfte36n" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -85,17 +120,22 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="nmj.rule.core" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="nmj.rule.core" />
+      <recent name="nmj.rule.annotations" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="nmj.rule" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="CreateTestDialog.RecentsKey">
+    <key name="CreateClassDialog.RecentsKey">
       <recent name="nmj.rule.core" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="nmj.rule.annotations" />
+      <recent name="nmj.rule" />
     </key>
   </component>
   <component name="RunManager" selected="JUnit.InfoTest.test3">
@@ -106,33 +146,14 @@
       <module />
       <method />
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
       <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <method />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -142,10 +163,10 @@
       </method>
     </configuration>
     <configuration name="InfoTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="mybatis-helper" />
+      <module name="rule" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="PACKAGE_NAME" value="nmj.rule.core" />
-      <option name="MAIN_CLASS_NAME" value="nmj.rule.core.InfoTest" />
+      <option name="PACKAGE_NAME" value="nmj.rule" />
+      <option name="MAIN_CLASS_NAME" value="nmj.rule.InfoTest" />
       <option name="METHOD_NAME" value="test" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -154,10 +175,10 @@
       </method>
     </configuration>
     <configuration name="InfoTest.test3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="mybatis-helper" />
+      <module name="rule" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="PACKAGE_NAME" value="nmj.rule.core" />
-      <option name="MAIN_CLASS_NAME" value="nmj.rule.core.InfoTest" />
+      <option name="PACKAGE_NAME" value="nmj.rule" />
+      <option name="MAIN_CLASS_NAME" value="nmj.rule.InfoTest" />
       <option name="METHOD_NAME" value="test3" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -171,6 +192,18 @@
       <option name="PACKAGE_NAME" value="nmj.rule" />
       <option name="MAIN_CLASS_NAME" value="nmj.rule.RuleTest" />
       <option name="METHOD_NAME" value="tes3t" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RuleTest.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rule" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="PACKAGE_NAME" value="nmj.rule" />
+      <option name="MAIN_CLASS_NAME" value="nmj.rule.RuleTest" />
+      <option name="METHOD_NAME" value="test" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <method v="2">
@@ -197,11 +230,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file enabled="true" id="idea.log" />
+    <configuration default="true" type="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -209,6 +243,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.InfoTest.test3" />
+        <item itemvalue="JUnit.RuleTest.test (1)" />
         <item itemvalue="JUnit.RuleTest.tes3t" />
         <item itemvalue="JUnit.InfoTest.test" />
         <item itemvalue="JUnit.RuleTest.test" />
@@ -225,5 +260,94 @@
       <updated>1639908915163</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="773" y="263" key="#com.intellij.ide.util.MemberChooser" timestamp="1640517291067">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="773" y="263" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1640517291067" />
+    <state x="715" y="416" width="490" height="256" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1640521549378">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="715" y="416" width="490" height="256" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1080@0.0.1920.1080" timestamp="1640521549378" />
+    <state x="229" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1640518825271">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="229" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1640518825271" />
+    <state x="723" y="249" key="#xdebugger.evaluate" timestamp="1640521694858">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="723" y="249" key="#xdebugger.evaluate/0.0.1920.1080@0.0.1920.1080" timestamp="1640521694858" />
+    <state width="548" height="466" key="DebuggerActiveHint" timestamp="1640521802853">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="548" height="466" key="DebuggerActiveHint/0.0.1920.1080@0.0.1920.1080" timestamp="1640521802853" />
+    <state width="1899" height="375" key="GridCell.Tab.0.bottom" timestamp="1640524527183">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="375" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527183" />
+    <state width="1899" height="375" key="GridCell.Tab.0.center" timestamp="1640524527179">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="375" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527179" />
+    <state width="1899" height="375" key="GridCell.Tab.0.left" timestamp="1640524527177">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="375" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527177" />
+    <state width="1899" height="375" key="GridCell.Tab.0.right" timestamp="1640524527181">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="375" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527181" />
+    <state width="1899" height="375" key="GridCell.Tab.1.bottom" timestamp="1640524527048">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="375" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527048" />
+    <state width="1899" height="375" key="GridCell.Tab.1.center" timestamp="1640524527046">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="375" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527046" />
+    <state width="1899" height="375" key="GridCell.Tab.1.left" timestamp="1640524527045">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="375" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527045" />
+    <state width="1899" height="375" key="GridCell.Tab.1.right" timestamp="1640524527047">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="375" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1640524527047" />
+    <state x="657" y="323" key="refactoring.ChangeSignatureDialog" timestamp="1640519436245">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="657" y="323" key="refactoring.ChangeSignatureDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1640519436245" />
+    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1640521759578">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="625" y="241" width="670" height="676" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1640521759578" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest2.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/nmj/rule/RuleClassTest2.java</url>
+          <line>10</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
