@@ -43,15 +43,11 @@ public final class RuleContext<Model> {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException();
         }
-        final Set<String> visited = new HashSet<>(128);
-        final InfoCache.ValueHolder valueHolder = get(name, visited);
+        final InfoCache.ValueHolder valueHolder = get(name, new HashSet<>(128));
         if (valueHolder.isComplete()) {
             return valueHolder.getValue();
         }
-        if (valueHolder.isUnreachable()) {
-            return orElse;
-        }
-        throw new IllegalArgumentException();
+        return orElse;
     }
 
     public <T> T getOrNull(String name) {
@@ -67,12 +63,11 @@ public final class RuleContext<Model> {
         if (valueHolder.isComplete()) {
             return valueHolder;
         }
-        if (valueHolder.isUnreachable()) {
-            return valueHolder;
-        }
+        visited.add(name);
         for (InfoCache.RuleInst instRule : modelInst.getRules()) {
             final List<InfoCache.ModelInst> args = instRule.getArgs();
-            if (args.isEmpty()) {
+            final int size = args.size();
+            if (size == 0) {
                 Object value = instRule.getValue(rules);
                 valueHolder.setValue(value);
                 if (valueHolder.isComplete()) {
@@ -82,35 +77,39 @@ public final class RuleContext<Model> {
                 }
             }
             boolean success = true;
-            final Object[] arguments = new Object[args.size()];
-            for (int i = 0; i < args.size(); i++) {
+            final Object[] arguments = new Object[size];
+            for (int i = 0; i < size; i++) {
                 final InfoCache.ModelInst arg = args.get(i);
                 final String argName = arg.getName();
+                final InfoCache.ValueHolder argValue = valueMap.get(argName, model, arg);
+                if (argValue.isComplete()) {
+                    arguments[i] = argValue.getValue();
+                    continue;
+                }
                 if (visited.contains(argName)) {
                     // 死循环了, 标记为不可达后, 立即跳出
                     success = false;
-                    valueMap.get(argName, model, modelInst).markAsUnreachable();
                     break;
                 }
-                visited.add(argName);
-                final InfoCache.ValueHolder vh = get(argName, visited);
-                if (!vh.isComplete()) {
-                    success = false;
-                    break;
+                // 尝试获取值
+                get(argName, visited);
+                if (argValue.isComplete()) {
+                    arguments[i] = argValue.getValue();
+                    continue;
                 }
-                arguments[i] = vh.getValue();
-            }
-            if (!success) {
-                continue;
+                success = false;
+                break;
             }
             // 存在这种情况的, 所有又加个这个看起来啰嗦的判断
             if (valueHolder.isComplete()) {
                 return valueHolder;
             }
-            final Object value = instRule.getValue(rules, arguments);
-            valueHolder.setValue(value);
-            if (valueHolder.isComplete()) {
-                return valueHolder;
+            if (success) {
+                final Object value = instRule.getValue(rules, arguments);
+                valueHolder.setValue(value);
+                if (valueHolder.isComplete()) {
+                    return valueHolder;
+                }
             }
         }
         return valueHolder;

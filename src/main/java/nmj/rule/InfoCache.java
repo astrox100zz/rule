@@ -111,10 +111,8 @@ final class InfoCache {
                 throw new IllegalArgumentException();
             }
             nmj.rule.annotations.RuleOrder orderAnnotation = method.getAnnotation(nmj.rule.annotations.RuleOrder.class);
-            if (orderAnnotation == null) {
-                throw new IllegalArgumentException();
-            }
-            int order = orderAnnotation.value();
+            // @RuleOrder不填就默认为0, 友好一点, 减少不必要的理解成本
+            int order = orderAnnotation == null ? 0 : orderAnnotation.value();
             rules.add(new Rule(name, order, method, pnd));
         }
         // 排序很关键
@@ -380,14 +378,9 @@ final class InfoCache {
 
     static final class ValueHolder {
         private Object value;
-        private boolean unreachable;
 
         public ValueHolder(Object value) {
             setValue(value);
-        }
-
-        public ValueHolder() {
-            setValue(null);
         }
 
         public void setValue(Object value) {
@@ -395,7 +388,6 @@ final class InfoCache {
                 throw new IllegalStateException();
             }
             this.value = value;
-            this.unreachable = false;
         }
 
         public <T> T getValue() {
@@ -405,16 +397,8 @@ final class InfoCache {
             throw new IllegalStateException();
         }
 
-        public void markAsUnreachable() {
-            this.unreachable = true;
-        }
-
         public boolean isComplete() {
             return value != null;
-        }
-
-        public boolean isUnreachable() {
-            return unreachable;
         }
     }
 
