@@ -253,7 +253,7 @@ final class InfoCache {
      */
     static final class ModelInst {
         private final Model model;
-        private List<RuleInst> rules;
+        private final List<RuleInst> rules;
 
         public ModelInst(Model model) {
             this.model = model;
@@ -383,18 +383,18 @@ final class InfoCache {
             setValue(value);
         }
 
-        public void setValue(Object value) {
-            if (isComplete()) {
-                throw new IllegalStateException();
-            }
-            this.value = value;
-        }
-
         public <T> T getValue() {
             if (isComplete()) {
                 return (T) value;
             }
             throw new IllegalStateException();
+        }
+
+        public void setValue(Object value) {
+            if (isComplete()) {
+                throw new IllegalStateException();
+            }
+            this.value = value;
         }
 
         public boolean isComplete() {

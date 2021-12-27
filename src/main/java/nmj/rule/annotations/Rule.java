@@ -14,6 +14,7 @@ public @interface Rule {
 
     /**
      * 此规则作用的模型名称
+     *
      * @return
      */
     String value();

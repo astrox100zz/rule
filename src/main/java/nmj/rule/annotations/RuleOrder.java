@@ -14,6 +14,7 @@ public @interface RuleOrder {
 
     /**
      * 规则的执行优先级, 数字越小, 执行优先级越高, Integer.MIN_VALUE为最高优先级
+     *
      * @return
      */
     int value();

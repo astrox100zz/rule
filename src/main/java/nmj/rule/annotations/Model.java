@@ -14,14 +14,16 @@ public @interface Model {
 
     /**
      * 必填, 模型名称不能有重复
+     *
      * @return
      */
     String name();
 
     /**
-     * 必填, 此模型的描述信息
+     * 此模型的描述信息
+     *
      * @return
      */
-    String comment();
+    String comment() default "";
 
 }

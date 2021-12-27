@@ -16,12 +16,27 @@ import java.util.function.Supplier;
 public final class RuleContext<Model> {
 
     private static final Logger log = LoggerFactory.getLogger(RuleContext.class);
-
+    private static final Map<String, String> METHOD_NAME_2_FIELD_NAME_CACHE = new ConcurrentHashMap<>(8192);
     private final Rules<Model> rules;
     private final Model model;
     private final Map<String, InfoCache.ModelInst> modelInst;
     private final InfoCache.ValueMap valueMap;
     private final Lazy<Model> proxy;
+
+    private RuleContext(Rules<Model> rules, Consumer<Model> consumer) {
+        this.rules = InfoCache.getTarget(rules);
+        InfoCache.DefaultCons<Model> cons = InfoCache.getConstructor(this.rules.getClass());
+        this.model = cons.newInstance();
+        consumer.accept(this.model);
+        this.proxy = new Lazy<>(() -> {
+            Enhancer enhancer = new Enhancer();
+            enhancer.setSuperclass(cons.getDeclaringClass());
+            enhancer.setCallback(new RuleCallback<>(this));
+            return (Model) enhancer.create();
+        });
+        this.modelInst = InfoCache.getModelInst(this.rules.getClass());
+        this.valueMap = new InfoCache.ValueMap(modelInst.size() * 2);
+    }
 
     public static <Model> RuleContext<Model> create(Rules<Model> rule, Consumer<Model> consumer) {
         if (rule == null || consumer == null) {
@@ -72,9 +87,8 @@ public final class RuleContext<Model> {
                 valueHolder.setValue(value);
                 if (valueHolder.isComplete()) {
                     return valueHolder;
-                } else {
-                    continue;
                 }
+                continue;
             }
             boolean success = true;
             final Object[] arguments = new Object[size];
@@ -91,7 +105,7 @@ public final class RuleContext<Model> {
                     success = false;
                     break;
                 }
-                // 尝试获取值
+                // 尝试获取值(递归调用)
                 get(argName, visited);
                 if (argValue.isComplete()) {
                     arguments[i] = argValue.getValue();
@@ -113,21 +127,6 @@ public final class RuleContext<Model> {
             }
         }
         return valueHolder;
-    }
-
-    private RuleContext(Rules<Model> rules, Consumer<Model> consumer) {
-        this.rules = InfoCache.getTarget(rules);
-        InfoCache.DefaultCons<Model> cons = InfoCache.getConstructor(this.rules.getClass());
-        this.model = cons.newInstance();
-        consumer.accept(this.model);
-        this.proxy = new Lazy<>(() -> {
-            Enhancer enhancer = new Enhancer();
-            enhancer.setSuperclass(cons.getDeclaringClass());
-            enhancer.setCallback(new RuleCallback<>(this));
-            return (Model) enhancer.create();
-        });
-        this.modelInst = InfoCache.getModelInst(this.rules.getClass());
-        this.valueMap = new InfoCache.ValueMap(modelInst.size() * 2);
     }
 
     private <T> T getOrNull(Method method) {
@@ -194,6 +193,4 @@ public final class RuleContext<Model> {
             return context.getOrNull(method);
         }
     }
-
-    private static final Map<String, String> METHOD_NAME_2_FIELD_NAME_CACHE = new ConcurrentHashMap<>(8192);
 }
