@@ -18,11 +18,6 @@ final class InfoCache {
     // rule类 model名称 model实例
     private static final Map<Class<?>, Map<String, ModelInst>> MODEL_INST_CACHE = new ConcurrentHashMap<>(2048);
 
-    public static <Model> Rules<Model> getTarget(Rules<Model> rule) {
-        // TODO
-        return rule;
-    }
-
     public static <Model> DefaultCons<Model> getConstructor(Class<?> ruleClass) {
         DefaultCons<Model> defaultCons = (DefaultCons<Model>) CONSTRUCTOR_CACHE.get(ruleClass);
         if (defaultCons != null) {

@@ -24,7 +24,7 @@ public final class RuleContext<Model> {
     private final Lazy<Model> proxy;
 
     private RuleContext(Rules<Model> rules, Consumer<Model> consumer) {
-        this.rules = InfoCache.getTarget(rules);
+        this.rules = rules;
         InfoCache.DefaultCons<Model> cons = InfoCache.getConstructor(this.rules.getClass());
         this.model = cons.newInstance();
         consumer.accept(this.model);
