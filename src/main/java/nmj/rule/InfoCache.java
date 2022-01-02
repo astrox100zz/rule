@@ -4,6 +4,7 @@ import nmj.rule.annotations.OrderedRule;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
 
+import java.beans.Introspector;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +17,8 @@ final class InfoCache {
 
     private static final Map<Class<?>, List<Rule>> RULE_CACHE = new ConcurrentHashMap<>(2048);
 
-    // rule类 model名称 model实例
+    private static final Map<Method, String> METHOD_CACHE = new ConcurrentHashMap<>(8192);
+
     private static final Map<Class<?>, Map<String, ModelInst>> MODEL_INST_CACHE = new ConcurrentHashMap<>(2048);
 
     public static <Model> DefaultCons<Model> getConstructor(Class<?> ruleClass) {
@@ -61,6 +63,32 @@ final class InfoCache {
         return modelInstMap;
     }
 
+    public static String getModelName(Method method) {
+        final String methodName = method.getName();
+        if (!methodName.startsWith("get") && !methodName.startsWith("is")) {
+            return null;
+        }
+        String model = METHOD_CACHE.get(method);
+        if (model != null) {
+            return model;
+        }
+        nmj.rule.annotations.Model annotation = method.getAnnotation(nmj.rule.annotations.Model.class);
+        if (annotation != null) {
+            model = annotation.value();
+            METHOD_CACHE.put(method, model);
+            return model;
+        }
+        if (methodName.startsWith("get")) {
+            model = Introspector.decapitalize(methodName.substring(3));
+        } else if (methodName.startsWith("is")) {
+            model = Introspector.decapitalize(methodName.substring(3));
+        } else {
+            throw new IllegalStateException();
+        }
+        METHOD_CACHE.put(method, model);
+        return model;
+    }
+
     private static <Model> DefaultCons<Model> getConstructorInternal(Class<Model> targetRuleClass) {
         for (Class<?> current = targetRuleClass;
              !Objects.equals(current, Object.class);
@@ -84,7 +112,11 @@ final class InfoCache {
             if (annotation == null) {
                 continue;
             }
-            String name = annotation.name();
+            if (field.getType().isPrimitive()) {
+                // 模型定义必须是非基本类型(也就是可以为null)
+                throw new IllegalArgumentException("字段 " + field.toGenericString() + " 不得为基本类型 " + field.getType().getName());
+            }
+            String name = annotation.value();
             if (name.isEmpty()) {
                 throw new IllegalArgumentException();
             }
@@ -145,8 +177,9 @@ final class InfoCache {
                     throw new IllegalArgumentException();
                 }
                 RuleInst ruleInst = new RuleInst(rule, modelInst);
-                if (!Objects.equals(ruleInst.getReturnType(), inst.getType())) {
-                    throw new IllegalArgumentException();
+
+                if (!inst.getType().isAssignableFrom(ruleInst.getReturnType())) {
+                    throw new IllegalArgumentException("规则 " + rule.toGenericString() + " 中返回类型为 " + ruleInst.getReturnType().getName() + " 与模型 " + name + " 的类型 " + inst.getType().getName() + " 不一致");
                 }
                 RuleStore ruleStore = ruleStoreMap.get(name);
                 if (ruleStore == null) {
@@ -197,7 +230,7 @@ final class InfoCache {
         public Rule(String name, boolean isOrderedRule, long order, Method method, ParameterNameDiscoverer pnd) {
             // 规则必须为private方法, 这是为了防止有人去继承
             if (!Modifier.isPrivate(method.getModifiers())) {
-                throw new IllegalStateException();
+                throw new IllegalStateException("规则 " + method.toGenericString() + " 必须为private");
             }
             method.setAccessible(true);
             this.name = name;
@@ -255,6 +288,10 @@ final class InfoCache {
             } catch (Throwable e) {
                 throw new IllegalStateException(e);
             }
+        }
+
+        public String toGenericString() {
+            return method.toGenericString();
         }
     }
 
@@ -396,7 +433,7 @@ final class InfoCache {
             }
             boolean allReady = true;
             for (ModelInst arg : args) {
-                if (!valueMap.get(arg.getName(), model, arg).isComplete()) {
+                if (!valueMap.get(arg.getName(), model, arg).isCompleted()) {
                     allReady = false;
                     break;
                 }
@@ -431,7 +468,7 @@ final class InfoCache {
                 }
                 if (!Objects.equals(argument.getType(), inst.getType())) {
                     // 规则类型定义不一致
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("规则 " + this.rule.toGenericString() + " 定义的参数 " + name + " 类型为 " + argument.getType().getName() + " 与模型中定义的 " + inst.getType().getName() + " 不一致");
                 }
                 args.add(inst);
             }
@@ -525,20 +562,20 @@ final class InfoCache {
         }
 
         public <T> T getValue() {
-            if (isComplete()) {
+            if (isCompleted()) {
                 return (T) value;
             }
             throw new IllegalStateException();
         }
 
         public void setValue(Object value) {
-            if (isComplete()) {
+            if (isCompleted()) {
                 throw new IllegalStateException();
             }
             this.value = value;
         }
 
-        public boolean isComplete() {
+        public boolean isCompleted() {
             return value != null;
         }
     }

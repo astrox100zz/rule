@@ -9,33 +9,92 @@ public class RuleTest {
 
     @Test
     public void test() {
-        final R1 r1 = new R1();
-        final RuleContext<M1> m1RuleContext = RuleContext.create(r1, m -> {
-            m.setContext(new Context(2L));
-        });
-        final M1 proxy = m1RuleContext.getProxy();
-        System.out.println(proxy.getContext());
-        System.out.println(proxy.getTenantId());
+        {
+            final R1 r1 = new R1();
+            final RuleContext<M1> m1RuleContext = RuleContext.create(r1, m -> {
+                m.setContext(new Context(2L));
+            });
+            final M1 proxy = m1RuleContext.getProxy();
+            System.out.println(proxy.getTenantId());
+        }
+        {
+            final R1 r1 = new R1();
+            final RuleContext<M1> m1RuleContext = RuleContext.create(r1, m -> {
+                m.setContext(new Context(2L));
+            });
+            final M1 proxy = m1RuleContext.getProxy();
+            System.out.println(proxy.getTenantId());
+        }
+        {
+            final R1 r1 = new R1();
+            final RuleContext<M1> m1RuleContext = RuleContext.create(r1, m -> {
+                m.setContext(new Context(2L));
+            });
+            final M1 proxy = m1RuleContext.getProxy();
+            System.out.println(proxy.getTenantId());
+        }
+        {
+            final R1 r1 = new R1();
+            final RuleContext<M1> m1RuleContext = RuleContext.create(r1, m -> {
+                m.setContext(new Context(2L));
+            });
+            final M1 proxy = m1RuleContext.getProxy();
+            System.out.println(proxy.getTenantId());
+        }
+        {
+            final R1 r1 = new R1();
+            final RuleContext<M1> m1RuleContext = RuleContext.create(r1, m -> {
+                m.setContext(new Context(2L));
+            });
+            final M1 proxy = m1RuleContext.getProxy();
+            System.out.println(proxy.getTenantId());
+        }
+        {
+            final R1 r1 = new R1();
+            final RuleContext<M1> m1RuleContext = RuleContext.create(r1, m -> {
+                m.setContext(new Context(2L));
+            });
+            final M1 proxy = m1RuleContext.getProxy();
+            System.out.println(proxy.getTenantId());
+            System.out.println(proxy.getContext());
+        }
     }
 
     public static class R1 implements Rules<M1> {
 
         @Rule("tenantId")
-        private Long tenantId(Context context) {
-            return context.getTenantId();
+        private Long tenantId0() throws Exception {
+            System.out.println(0 + " exe");
+            Thread.sleep(1000);
+            return 0L;
         }
 
-        @OrderedRule(-1)
         @Rule("tenantId")
-        private Long tenantId() {
+        private Long tenantId2() throws Exception {
+            System.out.println(2 + " exe");
+            Thread.sleep(3000);
+            System.out.println(2);
+            return 2L;
+        }
+
+        @Rule("tenantId")
+        private Long tenantId1() throws Exception {
+            System.out.println(1 + " exe");
+            Thread.sleep(2000);
             return 1L;
         }
 
-        @OrderedRule
-        @Rule("tenantId")
-        private Long tenantId2(Context context) {
-            return context.getTenantId();
-        }
+//        @OrderedRule(-1)
+//        @Rule("tenantId")
+//        private Long tenantId() {
+//            return 1L;
+//        }
+//
+//        @OrderedRule
+//        @Rule("tenantId")
+//        private Long tenantId2(Context context) {
+//            return context.getTenantId();
+//        }
 
         @Rule("context")
         private Context context(Long tenantId) {
@@ -44,9 +103,9 @@ public class RuleTest {
     }
 
     public static class M1 {
-        @Model(name = "tenantId", comment = "租户id")
+        @Model(value = "tenantId", comment = "租户id")
         Long tenantId;
-        @Model(name = "context", comment = "上下文")
+        @Model(value = "context", comment = "上下文")
         Context context;
 
         public Long getTenantId() {
@@ -101,111 +160,111 @@ public class RuleTest {
     }
 
     public static class Suit {
-        @Model(name = "tenantId", comment = "租户id")
+        @Model(value = "tenantId", comment = "租户id")
         Long tenantId;
-        @Model(name = "context", comment = "上下文")
+        @Model(value = "context", comment = "上下文")
         Context context;
-        @Model(name = "brand", comment = "品牌")
+        @Model(value = "brand", comment = "品牌")
         private String brand;
-        @Model(name = "brand1", comment = "品牌")
+        @Model(value = "brand1", comment = "品牌")
         private String brand1;
-        @Model(name = "brand2", comment = "品牌")
+        @Model(value = "brand2", comment = "品牌")
         private String brand2;
-        @Model(name = "brand3", comment = "品牌")
+        @Model(value = "brand3", comment = "品牌")
         private String brand3;
-        @Model(name = "brand4", comment = "品牌")
+        @Model(value = "brand4", comment = "品牌")
         private String brand4;
-        @Model(name = "brand5", comment = "品牌")
+        @Model(value = "brand5", comment = "品牌")
         private String brand5;
-        @Model(name = "brand6", comment = "品牌")
+        @Model(value = "brand6", comment = "品牌")
         private String brand6;
-        @Model(name = "brand7", comment = "品牌")
+        @Model(value = "brand7", comment = "品牌")
         private String brand7;
-        @Model(name = "brand8", comment = "品牌")
+        @Model(value = "brand8", comment = "品牌")
         private String brand8;
-        @Model(name = "brand9", comment = "品牌")
+        @Model(value = "brand9", comment = "品牌")
         private String brand9;
-        @Model(name = "brand10", comment = "品牌")
+        @Model(value = "brand10", comment = "品牌")
         private String brand10;
-        @Model(name = "brand11", comment = "品牌")
+        @Model(value = "brand11", comment = "品牌")
         private String brand11;
-        @Model(name = "brand12", comment = "品牌")
+        @Model(value = "brand12", comment = "品牌")
         private String brand12;
-        @Model(name = "brand13", comment = "品牌")
+        @Model(value = "brand13", comment = "品牌")
         private String brand13;
-        @Model(name = "brand14", comment = "品牌")
+        @Model(value = "brand14", comment = "品牌")
         private String brand14;
-        @Model(name = "brand51", comment = "品牌")
+        @Model(value = "brand51", comment = "品牌")
         private String brand15;
-        @Model(name = "brand15", comment = "品牌")
+        @Model(value = "brand15", comment = "品牌")
         private String brand16;
-        @Model(name = "brand16", comment = "品牌")
+        @Model(value = "brand16", comment = "品牌")
         private String brand17;
-        @Model(name = "brand17", comment = "品牌")
+        @Model(value = "brand17", comment = "品牌")
         private String brand18;
-        @Model(name = "brand18", comment = "品牌")
+        @Model(value = "brand18", comment = "品牌")
         private String brand19;
-        @Model(name = "brand19", comment = "品牌")
+        @Model(value = "brand19", comment = "品牌")
         private String brand20;
-        @Model(name = "brand20", comment = "品牌")
+        @Model(value = "brand20", comment = "品牌")
         private String brand21;
-        @Model(name = "brand21", comment = "品牌")
+        @Model(value = "brand21", comment = "品牌")
         private String brand22;
-        @Model(name = "brand22", comment = "品牌")
+        @Model(value = "brand22", comment = "品牌")
         private String brand23;
-        @Model(name = "brand23", comment = "品牌")
+        @Model(value = "brand23", comment = "品牌")
         private String brand24;
-        @Model(name = "brand24", comment = "品牌")
+        @Model(value = "brand24", comment = "品牌")
         private String brand25;
-        @Model(name = "brand25", comment = "品牌")
+        @Model(value = "brand25", comment = "品牌")
         private String brand26;
-        @Model(name = "brand26", comment = "品牌")
+        @Model(value = "brand26", comment = "品牌")
         private String brand27;
-        @Model(name = "brand27", comment = "品牌")
+        @Model(value = "brand27", comment = "品牌")
         private String brand28;
-        @Model(name = "brand28", comment = "品牌")
+        @Model(value = "brand28", comment = "品牌")
         private String brand29;
-        @Model(name = "brand29", comment = "品牌")
+        @Model(value = "brand29", comment = "品牌")
         private String brand30;
-        @Model(name = "brand30", comment = "品牌")
+        @Model(value = "brand30", comment = "品牌")
         private String brand31;
-        @Model(name = "brand31", comment = "品牌")
+        @Model(value = "brand31", comment = "品牌")
         private String brand32;
-        @Model(name = "brand32", comment = "品牌")
+        @Model(value = "brand32", comment = "品牌")
         private String brand33;
-        @Model(name = "brand33", comment = "品牌")
+        @Model(value = "brand33", comment = "品牌")
         private String brand34;
-        @Model(name = "brand34", comment = "品牌")
+        @Model(value = "brand34", comment = "品牌")
         private String brand35;
-        @Model(name = "brand35", comment = "品牌")
+        @Model(value = "brand35", comment = "品牌")
         private String brand36;
-        @Model(name = "brand36", comment = "品牌")
+        @Model(value = "brand36", comment = "品牌")
         private String brand37;
-        @Model(name = "brand37", comment = "品牌")
+        @Model(value = "brand37", comment = "品牌")
         private String brand38;
-        @Model(name = "brand38", comment = "品牌")
+        @Model(value = "brand38", comment = "品牌")
         private String brand39;
-        @Model(name = "brand39", comment = "品牌")
+        @Model(value = "brand39", comment = "品牌")
         private String brand40;
-        @Model(name = "brand40", comment = "品牌")
+        @Model(value = "brand40", comment = "品牌")
         private String brand41;
-        @Model(name = "brand41", comment = "品牌")
+        @Model(value = "brand41", comment = "品牌")
         private String brand42;
-        @Model(name = "brand42", comment = "品牌")
+        @Model(value = "brand42", comment = "品牌")
         private String brand43;
-        @Model(name = "brand43", comment = "品牌")
+        @Model(value = "brand43", comment = "品牌")
         private String brand44;
-        @Model(name = "brand44", comment = "品牌")
+        @Model(value = "brand44", comment = "品牌")
         private String brand45;
-        @Model(name = "brand45", comment = "品牌")
+        @Model(value = "brand45", comment = "品牌")
         private String brand46;
-        @Model(name = "brand46", comment = "品牌")
+        @Model(value = "brand46", comment = "品牌")
         private String brand47;
-        @Model(name = "brand47", comment = "品牌")
+        @Model(value = "brand47", comment = "品牌")
         private String brand48;
-        @Model(name = "brand48", comment = "品牌")
+        @Model(value = "brand48", comment = "品牌")
         private String brand49;
-        @Model(name = "brand50", comment = "品牌")
+        @Model(value = "brand50", comment = "品牌")
         private String brand50;
 
         public String getBrand() {
