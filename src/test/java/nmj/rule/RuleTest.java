@@ -1,8 +1,8 @@
 package nmj.rule;
 
 import nmj.rule.annotations.Model;
+import nmj.rule.annotations.OrderedRule;
 import nmj.rule.annotations.Rule;
-import nmj.rule.annotations.RuleOrder;
 import org.junit.Test;
 
 public class RuleTest {
@@ -11,6 +11,7 @@ public class RuleTest {
     public void test() {
         final R1 r1 = new R1();
         final RuleContext<M1> m1RuleContext = RuleContext.create(r1, m -> {
+            m.setContext(new Context(2L));
         });
         final M1 proxy = m1RuleContext.getProxy();
         System.out.println(proxy.getContext());
@@ -24,10 +25,16 @@ public class RuleTest {
             return context.getTenantId();
         }
 
-        @RuleOrder(1)
+        @OrderedRule(-1)
         @Rule("tenantId")
         private Long tenantId() {
             return 1L;
+        }
+
+        @OrderedRule
+        @Rule("tenantId")
+        private Long tenantId2(Context context) {
+            return context.getTenantId();
         }
 
         @Rule("context")
@@ -61,13 +68,13 @@ public class RuleTest {
 
     public static class RuleClassTest implements Rules<Suit> {
 
-        @RuleOrder(-1)
+        @OrderedRule(-1)
         @Rule("brand")
         private String brand(String brand2) {
             return brand2.toLowerCase();
         }
 
-        @RuleOrder(0)
+        @OrderedRule(0)
         @Rule("brand")
         private String brand() {
             return "wasup";

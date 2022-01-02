@@ -69,7 +69,7 @@ public final class RuleContext<Model> {
         return getOrElse(name, null);
     }
 
-    private InfoCache.ValueHolder get(String name, Set<String> visited) {
+    private InfoCache.ValueHolder get(String name, Set<InfoCache.RuleInst> visited) {
         final InfoCache.ModelInst modelInst = this.modelInst.get(name);
         if (modelInst == null) {
             throw new IllegalArgumentException();
@@ -78,51 +78,92 @@ public final class RuleContext<Model> {
         if (valueHolder.isComplete()) {
             return valueHolder;
         }
-        visited.add(name);
-        for (InfoCache.RuleInst instRule : modelInst.getRules()) {
-            final List<InfoCache.ModelInst> args = instRule.getArgs();
-            final int size = args.size();
-            if (size == 0) {
-                Object value = instRule.getValue(rules);
-                valueHolder.setValue(value);
-                if (valueHolder.isComplete()) {
-                    return valueHolder;
-                }
-                continue;
-            }
-            boolean success = true;
-            final Object[] arguments = new Object[size];
-            for (int i = 0; i < size; i++) {
-                final InfoCache.ModelInst arg = args.get(i);
-                final String argName = arg.getName();
-                final InfoCache.ValueHolder argValue = valueMap.get(argName, model, arg);
-                if (argValue.isComplete()) {
-                    arguments[i] = argValue.getValue();
+        for (InfoCache.RuleStore ruleStore : modelInst.getRules()) {
+            // 优先按顺序执行有序规则
+            List<InfoCache.RuleInst> orderedRules = ruleStore.getOrderedRules();
+            for (InfoCache.RuleInst or : orderedRules) {
+                if (visited.contains(or)) {
                     continue;
                 }
-                if (visited.contains(argName)) {
-                    // 死循环了, 标记为不可达后, 立即跳出
+                visited.add(or);
+                final List<InfoCache.ModelInst> args = or.getArgs();
+                final int size = args.size();
+                if (size == 0) {
+                    Object value = or.getValue(rules);
+                    valueHolder.setValue(value);
+                    if (valueHolder.isComplete()) {
+                        return valueHolder;
+                    }
+                    continue;
+                }
+                boolean success = true;
+                for (final InfoCache.ModelInst arg : args) {
+                    final String argName = arg.getName();
+                    final InfoCache.ValueHolder argValue = valueMap.get(argName, model, arg);
+                    if (argValue.isComplete()) {
+                        continue;
+                    }
+                    // 尝试获取值(递归调用)
+                    get(argName, visited);
+                    if (argValue.isComplete()) {
+                        continue;
+                    }
                     success = false;
                     break;
                 }
-                // 尝试获取值(递归调用)
-                get(argName, visited);
-                if (argValue.isComplete()) {
-                    arguments[i] = argValue.getValue();
-                    continue;
+                // 存在这种情况的, 所有又加个这个看起来啰嗦的判断
+                if (valueHolder.isComplete()) {
+                    return valueHolder;
                 }
-                success = false;
-                break;
+                if (success) {
+                    final Object value = or.getValue(rules, valueMap);
+                    valueHolder.setValue(value);
+                    if (valueHolder.isComplete()) {
+                        return valueHolder;
+                    }
+                }
             }
-            // 存在这种情况的, 所有又加个这个看起来啰嗦的判断
-            if (valueHolder.isComplete()) {
-                return valueHolder;
-            }
-            if (success) {
-                final Object value = instRule.getValue(rules, arguments);
+            // 对于普通规则, 执行逻辑为 1. 优先执行当前参数已经就绪的 2. 之后按照顺序执行
+            List<InfoCache.RuleInst> generalRules = ruleStore.getGeneralRules();
+            for (InfoCache.RuleInst gr : generalRules) {
+                // 优先尝试当前参数已经都准备好的
+                Object value = gr.tryIfAllArgsReady(rules, model, valueMap, visited);
                 valueHolder.setValue(value);
                 if (valueHolder.isComplete()) {
                     return valueHolder;
+                }
+            }
+            for (InfoCache.RuleInst gr : generalRules) {
+                if (visited.contains(gr)) {
+                    continue;
+                }
+                visited.add(gr);
+                final List<InfoCache.ModelInst> args = gr.getArgs();
+                boolean success = true;
+                for (final InfoCache.ModelInst arg : args) {
+                    final String argName = arg.getName();
+                    final InfoCache.ValueHolder argValue = valueMap.get(argName, model, arg);
+                    if (argValue.isComplete()) {
+                        continue;
+                    }
+                    // 尝试获取值(递归调用)
+                    get(argName, visited);
+                    if (argValue.isComplete()) {
+                        continue;
+                    }
+                    success = false;
+                    break;
+                }
+                // 存在这种情况的, 所有又加个这个看起来啰嗦的判断
+                if (valueHolder.isComplete()) {
+                    return valueHolder;
+                }
+                if (success) {
+                    final Object value = gr.getValue(rules, valueMap);
+                    valueHolder.setValue(value);
+                    if (valueHolder.isComplete()) {
+                        return valueHolder;
+                    }
                 }
             }
         }

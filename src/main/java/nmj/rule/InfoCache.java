@@ -1,5 +1,6 @@
 package nmj.rule;
 
+import nmj.rule.annotations.OrderedRule;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
 
@@ -105,10 +106,10 @@ final class InfoCache {
             if (name.isEmpty()) {
                 throw new IllegalArgumentException();
             }
-            nmj.rule.annotations.RuleOrder orderAnnotation = method.getAnnotation(nmj.rule.annotations.RuleOrder.class);
+            OrderedRule orderAnnotation = method.getAnnotation(nmj.rule.annotations.OrderedRule.class);
             // @RuleOrder不填就默认为0, 友好一点, 减少不必要的理解成本
             int order = orderAnnotation == null ? 0 : orderAnnotation.value();
-            rules.add(new Rule(name, order, method, pnd));
+            rules.add(new Rule(name, orderAnnotation != null, order, method, pnd));
         }
         // 排序很关键
         rules.sort(Comparator.comparingLong(Rule::getOrder));
@@ -135,6 +136,7 @@ final class InfoCache {
         for (Class<?> current = ruleClass;
              !Objects.equals(current, Object.class);
              current = current.getSuperclass()) {
+            Map<String, RuleStore> ruleStoreMap = new HashMap<>(modelInst.size() * 2);
             for (Rule rule : getRules(current)) {
                 String name = rule.getName();
                 ModelInst inst = modelInst.get(name);
@@ -145,6 +147,12 @@ final class InfoCache {
                 RuleInst ruleInst = new RuleInst(rule, modelInst);
                 if (!Objects.equals(ruleInst.getReturnType(), inst.getType())) {
                     throw new IllegalArgumentException();
+                }
+                RuleStore ruleStore = ruleStoreMap.get(name);
+                if (ruleStore == null) {
+                    ruleStore = new RuleStore();
+                    ruleStoreMap.put(name, ruleStore);
+                    inst.addRuleStore(ruleStore);
                 }
                 inst.addRule(ruleInst);
             }
@@ -183,9 +191,10 @@ final class InfoCache {
         private final String name;
         private final Method method;
         private final long order;
+        private final boolean isOrderedRule;
         private final List<Argument> args;
 
-        public Rule(String name, long order, Method method, ParameterNameDiscoverer pnd) {
+        public Rule(String name, boolean isOrderedRule, long order, Method method, ParameterNameDiscoverer pnd) {
             if (!Modifier.isPrivate(method.getModifiers())) {
                 throw new IllegalStateException();
             }
@@ -193,6 +202,7 @@ final class InfoCache {
             this.name = name;
             this.method = method;
             this.order = order;
+            this.isOrderedRule = isOrderedRule;
             this.args = initArgs(pnd, method);
         }
 
@@ -210,6 +220,10 @@ final class InfoCache {
 
         public List<Argument> getArgs() {
             return args;
+        }
+
+        public boolean isOrderedRule() {
+            return isOrderedRule;
         }
 
         private List<Argument> initArgs(ParameterNameDiscoverer pnd, Method method) {
@@ -248,7 +262,7 @@ final class InfoCache {
      */
     static final class ModelInst {
         private final Model model;
-        private final List<RuleInst> rules;
+        private final List<RuleStore> rules;
 
         public ModelInst(Model model) {
             this.model = model;
@@ -256,14 +270,19 @@ final class InfoCache {
         }
 
         public void addRule(RuleInst ruleInst) {
-            rules.add(ruleInst);
+            // 总是追加在最后一个ruleStore中
+            rules.get(rules.size() - 1).addRule(ruleInst);
+        }
+
+        public void addRuleStore(RuleStore ruleStore) {
+            rules.add(ruleStore);
         }
 
         public Class<?> getType() {
             return model.getType();
         }
 
-        public List<RuleInst> getRules() {
+        public List<RuleStore> getRules() {
             return rules;
         }
 
@@ -276,16 +295,53 @@ final class InfoCache {
         }
     }
 
+    static final class RuleStore {
+        // 有序规则, 需要有序执行
+        private final List<RuleInst> orderedRules;
+        // 普通规则, 任意顺序执行
+        private List<RuleInst> generalRules;
+
+        public RuleStore() {
+            this.orderedRules = new ArrayList<>();
+            this.generalRules = new ArrayList<>();
+        }
+
+        public List<RuleInst> getOrderedRules() {
+            return orderedRules;
+        }
+
+        public List<RuleInst> getGeneralRules() {
+            return generalRules;
+        }
+
+        public void setGeneralRules(List<RuleInst> generalRules) {
+            this.generalRules = generalRules;
+        }
+
+        public void addRule(RuleInst ruleInst) {
+            if (ruleInst.isOrderedRule()) {
+                orderedRules.add(ruleInst);
+            } else {
+                generalRules.add(ruleInst);
+            }
+        }
+    }
+
     /**
      * rule实例
      */
     static final class RuleInst {
         private final Rule rule;
+        private final ModelInst model;
         private final List<ModelInst> args;
+        // 第一次调用的时候记录的调用耗时, 用于做性能优化时的代价评估
+        private long cost;
 
         public RuleInst(Rule rule, Map<String, ModelInst> modelInst) {
             this.rule = rule;
+            this.model = modelInst.get(rule.getName());
             this.args = initArgs(rule, modelInst);
+            this.cost = -1L;
         }
 
         public Class<?> getReturnType() {
@@ -297,11 +353,69 @@ final class InfoCache {
         }
 
         public <Model> Object getValue(Rules<Model> rules) {
-            return rule.getValue(rules);
+            if (this.cost < 0) {
+                long start = System.currentTimeMillis();
+                Object value = rule.getValue(rules);
+                if (value != null) {
+                    this.cost = System.currentTimeMillis() - start;
+                    sortGeneralRuleByCost();
+                }
+                return value;
+            } else {
+                return rule.getValue(rules);
+            }
         }
 
-        public <Model> Object getValue(Rules<Model> rules, Object[] arguments) {
-            return rule.getValue(rules, arguments);
+        public <Model> Object getValue(Rules<Model> rules, ValueMap valueMap) {
+            Object[] arguments = getArguments(args, valueMap);
+            if (this.cost < 0) {
+                long start = System.currentTimeMillis();
+                Object value = rule.getValue(rules, arguments);
+                if (value != null) {
+                    this.cost = System.currentTimeMillis() - start;
+                    sortGeneralRuleByCost();
+                }
+                return value;
+            } else {
+                return rule.getValue(rules, arguments);
+            }
+        }
+
+        public <Model> Object tryIfAllArgsReady(Rules<Model> rules, Model model, ValueMap valueMap, Set<RuleInst> visited) {
+            if (visited.contains(this)) {
+                return null;
+            }
+            int size = args.size();
+            if (size == 0) {
+                Object value = getValue(rules);
+                if (value == null) {
+                    visited.add(this);
+                }
+                return value;
+            }
+            boolean allReady = true;
+            for (ModelInst arg : args) {
+                if (!valueMap.get(arg.getName(), model, arg).isComplete()) {
+                    allReady = false;
+                    break;
+                }
+            }
+            if (allReady) {
+                Object value = getValue(rules, valueMap);
+                if (value == null) {
+                    visited.add(this);
+                }
+                return value;
+            }
+            return null;
+        }
+
+        public long getCost() {
+            return cost;
+        }
+
+        public boolean isOrderedRule() {
+            return rule.isOrderedRule();
         }
 
         private List<ModelInst> initArgs(Rule rule, Map<String, ModelInst> modelInst) {
@@ -321,6 +435,37 @@ final class InfoCache {
                 args.add(inst);
             }
             return args;
+        }
+
+        private void sortGeneralRuleByCost() {
+            if (isOrderedRule()) {
+                // 有序规则不需要排序, 执行顺序严格按照用户定义
+                return;
+            }
+            // 对普通规则进行排序
+            List<RuleStore> rulesStoreList = this.model.getRules();
+            for (RuleStore rs : rulesStoreList) {
+                List<RuleInst> generalRules = rs.getGeneralRules();
+                for (RuleInst gr : generalRules) {
+                    if (this == gr) {
+                        List<RuleInst> copy = new ArrayList<>(generalRules);
+                        copy.sort(Comparator.comparingLong(RuleInst::getCost));
+                        rs.setGeneralRules(copy);
+                        // 只会存在一个, 所以直接返回
+                        return;
+                    }
+                }
+            }
+        }
+
+        private Object[] getArguments(List<InfoCache.ModelInst> args, InfoCache.ValueMap valueMap) {
+            Object[] arguments = new Object[args.size()];
+            for (int i = 0; i < args.size(); i++) {
+                InfoCache.ModelInst arg = args.get(i);
+                final InfoCache.ValueHolder argValue = valueMap.get(arg.getName(), model, arg);
+                arguments[i] = argValue.getValue();
+            }
+            return arguments;
         }
     }
 
