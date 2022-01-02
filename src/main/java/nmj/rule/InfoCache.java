@@ -195,6 +195,7 @@ final class InfoCache {
         private final List<Argument> args;
 
         public Rule(String name, boolean isOrderedRule, long order, Method method, ParameterNameDiscoverer pnd) {
+            // 规则必须为private方法, 这是为了防止有人去继承
             if (!Modifier.isPrivate(method.getModifiers())) {
                 throw new IllegalStateException();
             }
