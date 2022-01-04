@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * 3. 模型不允许为基本类型
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface Model {
 
     /**
