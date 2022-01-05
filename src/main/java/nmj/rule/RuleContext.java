@@ -11,6 +11,11 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ * github版本地址
+ * https://github.com/astrox100zz/rule
+ * @param <Model>
+ */
 public final class RuleContext<Model> {
 
     private static final Logger log = LoggerFactory.getLogger(RuleContext.class);
